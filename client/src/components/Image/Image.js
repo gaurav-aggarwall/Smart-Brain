@@ -1,21 +1,20 @@
 import React from 'react';
 
+import ImageBox from './ImageBox/ImageBox';
+
 import './Image.css';
 
-const Image = ({ imgSrc, box}) => {
+const Image = ({ imgSrc, box, faceCount }) => {
     
-    const boxBoundaries = {
-        top: box.topRow, 
-        right: box.rightCol, 
-        bottom: box.bottomRow, 
-        left: box.leftCol
-    };
+    let boxes = box.map(coords => {
+        return <ImageBox key={coords[0]} box={coords} /> 
+    });
 
     return (
         <div className='imgContainer'>
             <div className='absolute'>
                 <img id='faceImg' src={imgSrc} alt='' />
-                <div className='face-recog' style={boxBoundaries}></div>
+                {boxes}
             </div>
         </div>
     );

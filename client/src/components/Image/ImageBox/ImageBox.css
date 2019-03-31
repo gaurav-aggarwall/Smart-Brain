@@ -1,0 +1,9 @@
+.face-recog{
+    position: absolute;
+    box-shadow: 0 0 0 3px #148cd6 inset;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    cursor: pointer;
+    margin-left: 300px; 
+}

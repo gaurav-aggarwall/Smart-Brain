@@ -28,23 +28,34 @@ class App extends Component {
   state = {
     input: '',
     imgUrl: '',
-    box: {}
+    box: [],
+    faceCount: 0
   };
 
 
   // Box Area Calculation
   calculateBox = data => {
-    const face = data.outputs[0].data.regions[0].region_info.bounding_box;
+    let faceCount = data.outputs[0].data.regions.length;
+    this.setState({faceCount: faceCount});
+    
     const img = document.getElementById('faceImg');
     const width = Number(img.width);
     const height = Number(img.height);
+
+    const faceObj = [];
     
-    return {
-      leftCol: face.left_col * width,
-      topRow: face.top_row * height,
-      rightCol: width - (face.right_col * width),
-      bottomRow: height - (face.bottom_row * height)
+    for(let i = 0; i < faceCount; i++){
+      const face = data.outputs[0].data.regions[i].region_info.bounding_box;
+
+      let leftCol = face.left_col * width;
+      let topRow = face.top_row * height;
+      let rightCol = width - (face.right_col * width);
+      let bottomRow = height - (face.bottom_row * height);
+  
+      faceObj.push([topRow, rightCol, bottomRow, leftCol]);
     }
+    
+    return faceObj;
   }
 
 
@@ -80,7 +91,7 @@ class App extends Component {
         <Logo />
         <Rank />
         <InputForm onInputChange={this.onInputChange} onSubmitBtn={this.onSubmit}/>
-        <Image box={this.state.box} imgSrc={this.state.imgUrl}/>
+        <Image faceCount={this.state.faceCount} box={this.state.box} imgSrc={this.state.imgUrl}/>
       </div>
     );
   }
