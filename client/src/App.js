@@ -6,6 +6,7 @@ import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
 import InputForm from './components/InputForm/InputForm';
 import Rank from './components/Rank/Rank';
+import Image from './components/Image/Image';
 
 const app = new Clarifai.App({
   apiKey: 'd7fa32f8d6064906bf4c9f77865da330'
@@ -25,28 +26,51 @@ const ParticlesOptions = {
 
 class App extends Component {
   state = {
-    input: ''
+    input: '',
+    imgUrl: '',
+    box: {}
   };
 
+
+  // Box Area Calculation
+  calculateBox = data => {
+    const face = data.outputs[0].data.regions[0].region_info.bounding_box;
+    const img = document.getElementById('faceImg');
+    const width = Number(img.width);
+    const height = Number(img.height);
+    
+    return {
+      leftCol: face.left_col * width,
+      topRow: face.top_row * height,
+      rightCol: width - (face.right_col * width),
+      bottomRow: height - (face.bottom_row * height)
+    }
+  }
+
+
+  // Setting Box Boundaries
+  displayBox = box => {
+    this.setState({box: box});
+  }
+
+
+  // Input Handler
   onInputChange = event => {
     this.setState({input: event.target.value});
   }
 
+
+  // Submit Handler
   onSubmit = event => {
-    app.models.initModel({id: Clarifai.GENERAL_MODEL, version: "aa7f35c01e0642fda5cf400f543e7c40"})
-      .then(generalModel => {
-        return generalModel.predict("https://samples.clarifai.com/metro-north.jpg");
-      })
-      .then(response => {
-        console.log(response);
-      });
-    
-    app.models.predict("d7fa32f8d6064906bf4c9f77865da330", "https://samples.clarifai.com/face-det.jpg")
-    .then(res => {
-      console.log(res);
-    })
-    .catch();
+    this.setState({imgUrl: this.state.input})
+
+    app.models.predict("a403429f2ddf4b49b307e318f00e528b", this.state.input)
+    .then(response => this.displayBox(this.calculateBox(response)))
+      .catch(err =>{
+      console.log(err);
+    });
   }
+
 
   render() {
     return (
@@ -56,6 +80,7 @@ class App extends Component {
         <Logo />
         <Rank />
         <InputForm onInputChange={this.onInputChange} onSubmitBtn={this.onSubmit}/>
+        <Image box={this.state.box} imgSrc={this.state.imgUrl}/>
       </div>
     );
   }
