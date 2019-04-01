@@ -4,6 +4,7 @@ import Clarifai from 'clarifai';
 
 import Navigation from './components/Navigation/Navigation';
 import SignIn from './components/SignIn/SignIn';
+import Register from './components/Register/Register';
 import Logo from './components/Logo/Logo';
 import InputForm from './components/InputForm/InputForm';
 import Rank from './components/Rank/Rank';
@@ -31,7 +32,8 @@ class App extends Component {
     imgUrl: '',
     box: [],
     faceCount: 0,
-    route: 'signin'
+    route: 'signin',
+    isSignedIn: false
   };
 
 
@@ -85,20 +87,38 @@ class App extends Component {
   }
 
 
+  // Route Changer
+  routeChanger = route => {
+    if(route === 'home'){
+      this.setState({isSignedIn: true});
+    } else {
+      this.setState({isSignedIn: false});
+    }
+    this.setState({route: route});
+  }
+
+
   render() {
-    return (
-      <div className="App">
-        <Particles className='particles' params={ParticlesOptions} />
-        <Navigation />
-        { this.state.route === 'signin' ? <SignIn />
-            :
-            <div>
+    let route;
+
+    if(this.state.route === 'signin'){
+      route = <SignIn routeChanger={this.routeChanger}/>;
+    } else if(this.state.route === 'register'){
+      route = <Register routeChanger={this.routeChanger}/>;
+    } else {
+      route = <div>
                 <Logo />
                 <Rank />
                 <InputForm onInputChange={this.onInputChange} onSubmitBtn={this.onSubmit}/>
                 <Image box={this.state.box} imgSrc={this.state.imgUrl}/>
-            </div>
-        }
+              </div>;
+    }
+
+    return (
+      <div className="App">
+        <Particles className='particles' params={ParticlesOptions} />
+        <Navigation routeChanger={this.routeChanger} isSignedIn={this.state.isSignedIn}/>
+        { route }
       </div>
     );
   }
