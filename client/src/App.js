@@ -3,6 +3,7 @@ import Particles from 'react-particles-js';
 import Clarifai from 'clarifai';
 
 import Navigation from './components/Navigation/Navigation';
+import SignIn from './components/SignIn/SignIn';
 import Logo from './components/Logo/Logo';
 import InputForm from './components/InputForm/InputForm';
 import Rank from './components/Rank/Rank';
@@ -29,7 +30,8 @@ class App extends Component {
     input: '',
     imgUrl: '',
     box: [],
-    faceCount: 0
+    faceCount: 0,
+    route: 'signin'
   };
 
 
@@ -88,10 +90,15 @@ class App extends Component {
       <div className="App">
         <Particles className='particles' params={ParticlesOptions} />
         <Navigation />
-        <Logo />
-        <Rank />
-        <InputForm onInputChange={this.onInputChange} onSubmitBtn={this.onSubmit}/>
-        <Image faceCount={this.state.faceCount} box={this.state.box} imgSrc={this.state.imgUrl}/>
+        { this.state.route === 'signin' ? <SignIn />
+            :
+            <div>
+                <Logo />
+                <Rank />
+                <InputForm onInputChange={this.onInputChange} onSubmitBtn={this.onSubmit}/>
+                <Image box={this.state.box} imgSrc={this.state.imgUrl}/>
+            </div>
+        }
       </div>
     );
   }
