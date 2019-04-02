@@ -1,0 +1,23 @@
+{
+  "name": "smart-brain",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gaurav1209/Smart-Brain.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gaurav1209/Smart-Brain/issues"
+  },
+  "homepage": "https://github.com/gaurav1209/Smart-Brain#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
