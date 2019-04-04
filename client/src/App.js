@@ -107,7 +107,6 @@ class App extends Component {
       route = <Register routeChanger={this.routeChanger}/>;
     } else {
       route = <div>
-                <Logo />
                 <Rank />
                 <InputForm onInputChange={this.onInputChange} onSubmitBtn={this.onSubmit}/>
                 <Image box={this.state.box} imgSrc={this.state.imgUrl}/>
@@ -118,6 +117,7 @@ class App extends Component {
       <div className="App">
         <Particles className='particles' params={ParticlesOptions} />
         <Navigation routeChanger={this.routeChanger} isSignedIn={this.state.isSignedIn}/>
+        <Logo />
         { route }
       </div>
     );
