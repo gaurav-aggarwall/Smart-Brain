@@ -2,15 +2,19 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const authRoutes = require('./Routes/auth');
+const profileRoutes = require('./Routes/profile');
+
+const database = require('./db');
 
 const app = express();
 
 app.use(bodyParser.json());
 
 app.use('/auth', authRoutes);
+app.use('/profile', profileRoutes);
 
 app.get('/', (req,res) => {
-    res.send('Hello World');    
+    res.json(database);  
 });
 
 const PORT = process.env.PORT || 5000;

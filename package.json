@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/gaurav1209/Smart-Brain#readme",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
     "express": "^4.16.4"
   }

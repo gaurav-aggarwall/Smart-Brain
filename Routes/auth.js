@@ -1,4 +1,5 @@
 const Router = require('express').Router;
+const bcrypt = require('bcrypt-nodejs');
 
 const database = require('../db');
 
@@ -9,34 +10,39 @@ const router = Router();
 router.post('/login', (req,res) => {
     const userEmail = req.body.email;
     const userPass = req.body.password;
-    
-    let exist = false;
 
     database.forEach(user => {
-        if (user.email == userEmail && user.password == userPass){
-            return exist = true;
+        if (user.email == userEmail){
+            bcrypt.compare(userPass, user.password, (err, ans) => {
+                console.log(ans, typeof(ans));
+                if(ans){
+                    res.json('Authenticated');
+                } else {
+                    res.status(400).json('Not Authenticated');
+                }
+            });
+            
         }
     });
-
-    if(exist){
-        res.send('Authenticated');
-    }
+       
 });
 
 
 // New User Register 
 router.post('/register', (req,res) => {
-    const newUser = {
-        id: (database[database.length -1].id) + 1,
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        detection: 0,
-        joined: new Date()
-    }
+    bcrypt.hash(req.body.password, null, null, (err, hash) =>{
+        const newUser = {
+            id: (Number(database[database.length -1].id) + 1).toString(),
+            name: req.body.name,
+            email: req.body.email,
+            password: hash,
+            detection: 0,
+            joined: new Date()
+        }
 
-    database.push(newUser);
-    res.json(newUser);
+        database.push(newUser);
+        res.json(newUser);
+    });
 });
 
 module.exports = router;
