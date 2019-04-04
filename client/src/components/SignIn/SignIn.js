@@ -5,17 +5,19 @@ class SignIn extends Component{
     state = {
         email: '',
         password: ''
-    } 
+    };
 
 
     onEmailChange = event => {
         this.setState({email: event.target.value });
     }
 
+
     onPasswordChange = event => {
         this.setState({password: event.target.value });
     }
 
+    // Data Fetch
     onSumitSignIn = () => { 
         const dataObj = JSON.parse(JSON.stringify({...this.state}));
 

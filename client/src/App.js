@@ -33,7 +33,15 @@ class App extends Component {
     box: [],
     faceCount: 0,
     route: 'signin',
-    isSignedIn: false
+    isSignedIn: false,
+    user: {
+      id: '',
+      name: '',
+      email: '',
+      password: '',
+      detection: 0,
+      joined: ''
+    }
   };
 
 
@@ -98,13 +106,19 @@ class App extends Component {
   }
 
 
+  // Load User
+  loadUser = user => {
+    this.setState({user: {...user}});
+  }
+
+
   render() {
     let route;
 
     if(this.state.route === 'signin'){
       route = <SignIn routeChanger={this.routeChanger}/>;
     } else if(this.state.route === 'register'){
-      route = <Register routeChanger={this.routeChanger}/>;
+      route = <Register loadUser={this.loadUser} routeChanger={this.routeChanger}/>;
     } else {
       route = <div>
                 <Rank />
