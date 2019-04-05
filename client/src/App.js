@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Particles from 'react-particles-js';
 import Clarifai from 'clarifai';
+import axios from 'axios';
 
 import Navigation from './components/Navigation/Navigation';
 import SignIn from './components/SignIn/SignIn';
@@ -85,13 +86,23 @@ class App extends Component {
 
   // Submit Handler
   onSubmit = event => {
-    this.setState({imgUrl: this.state.input})
+    this.setState({imgUrl: this.state.input}, this.clarifaiFetch);    
+  }
 
+
+  // Clarifai Fetch
+  clarifaiFetch = () => {
     app.models.predict("a403429f2ddf4b49b307e318f00e528b", this.state.input)
-    .then(response => this.displayBox(this.calculateBox(response)))
-      .catch(err =>{
-      console.log(err);
-    });
+    .then(response => {
+      console.log('called');
+      this.displayBox(this.calculateBox(response));
+      console.log(response);
+      axios.post('http://localhost:5000/profile/image', {id: this.state.user.id})
+      .then(res => res.data)
+      .then(rank => {
+        this.setState({user: {detection: rank}});
+      })
+    }).catch(console.log);
   }
 
 
@@ -121,7 +132,7 @@ class App extends Component {
       route = <Register loadUser={this.loadUser} routeChanger={this.routeChanger}/>;
     } else {
       route = <div>
-                <Rank />
+                <Rank name={this.state.user.name || 'Gaurav'} rank={this.state.user.detection}/>
                 <InputForm onInputChange={this.onInputChange} onSubmitBtn={this.onSubmit}/>
                 <Image box={this.state.box} imgSrc={this.state.imgUrl}/>
               </div>;
