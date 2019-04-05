@@ -1,14 +1,13 @@
-const bcrypt = require('bcrypt-nodejs');
+const knex = require('knex');
 
-module.exports = {
-    users: [
-        {
-            id: '1',
-            name: 'Admin',
-            email: 'admin@gmail.com',
-            password: bcrypt.hashSync('admin'),
-            detection: 0,
-            joined: new Date()
-        }
-    ]
-}
+const db = knex({
+    client: 'pg',
+    connection: {
+      host : 'localhost',
+      user : 'postgres',
+      password : 'test123',
+      database : 'smart-brain'
+    }
+});
+
+module.exports = { db };
