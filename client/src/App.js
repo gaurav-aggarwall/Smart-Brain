@@ -119,7 +119,7 @@ class App extends Component {
 
   // Load User
   loadUser = user => {
-    this.setState({user: {...user}});
+    this.setState({user: {...user}}, () => console.log(this.state));
   }
 
 

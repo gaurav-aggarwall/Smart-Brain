@@ -5,8 +5,6 @@ const cors = require('cors');
 const authRoutes = require('./Routes/auth');
 const profileRoutes = require('./Routes/profile');
 
-const database = require('./db');
-
 const app = express();
 
 app.use(bodyParser.json());
