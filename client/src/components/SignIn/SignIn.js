@@ -24,7 +24,10 @@ class SignIn extends Component{
         axios.post('http://localhost:5000/auth/login', dataObj)
         .then(res => res.data)
         .then(res => {
-            if(res === 'Authenticated'){
+            if(res === 'Invalid Credentials'){
+                this.props.routeChanger('login');
+            } else {
+                this.props.loadUser(res);
                 this.props.routeChanger('home');
             }
         })

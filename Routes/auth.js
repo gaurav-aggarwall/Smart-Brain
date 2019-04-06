@@ -19,21 +19,12 @@ router.post('/login', (req,res) => {
             return db('users')
             .select('*')
             .where('email', '=', userEmail)
-            .then(user => {
-                console.log(user[0]);
-                res.json(user[0]);
-            })
-            .catch(err => {
-                console.log(err);
-                res.status(400).json('Error! Try again later.')
-            })
+            .then(user => res.json(user[0]))
+            .catch(err => res.status(400).json('Error! Try again later.'))
         } else {
-            res.status(400).json('Wrong Credentials');
+            res.status(400).json('Invalid Credentials');
         }
-    }).catch(err => {
-        console.log(err);
-        res.status(400).json('Invalid Credentials');
-    });       
+    }).catch(err => res.status(400).json('Invalid Credentials'));       
 });
 
 
@@ -61,10 +52,7 @@ router.post('/register', (req,res) => {
             });
         }).then(trx.commit)
         .catch(trx.rollback);
-    }).catch(err => {
-        console.log(err);
-        res.status(400).json('Unable to register');
-    });   
+    }).catch(err => res.status(400).json('Unable to register'));   
 });
 
 module.exports = router;

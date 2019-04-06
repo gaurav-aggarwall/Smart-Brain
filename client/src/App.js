@@ -127,7 +127,7 @@ class App extends Component {
     let route;
 
     if(this.state.route === 'signin'){
-      route = <SignIn routeChanger={this.routeChanger}/>;
+      route = <SignIn loadUser={this.loadUser} routeChanger={this.routeChanger}/>;
     } else if(this.state.route === 'register'){
       route = <Register loadUser={this.loadUser} routeChanger={this.routeChanger}/>;
     } else {
