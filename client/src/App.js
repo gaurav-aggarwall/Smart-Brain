@@ -132,7 +132,7 @@ class App extends Component {
       route = <Register loadUser={this.loadUser} routeChanger={this.routeChanger}/>;
     } else {
       route = <div>
-                <Rank name={this.state.user.name || 'Gaurav'} rank={this.state.user.detection}/>
+                <Rank name={this.state.user.name} rank={this.state.user.detection}/>
                 <InputForm onInputChange={this.onInputChange} onSubmitBtn={this.onSubmit}/>
                 <Image box={this.state.box} imgSrc={this.state.imgUrl}/>
               </div>;

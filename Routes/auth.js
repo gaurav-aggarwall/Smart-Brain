@@ -1,6 +1,7 @@
 const Router = require('express').Router;
-const db = require('../db').db;
 const bcrypt = require('bcrypt-nodejs');
+
+const db = require('../db').db;
 
 const router = Router();
 
