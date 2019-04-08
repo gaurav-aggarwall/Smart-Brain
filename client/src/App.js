@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Particles from 'react-particles-js';
-import { Switch, Route, Redirect } from 'react-router-dom';
 import Clarifai from 'clarifai';
 import axios from 'axios';
 
