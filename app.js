@@ -13,11 +13,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use('/profile', profileRoutes);
-app.use('/', authRoutes);
-
-app.get('/', (req,res) => {
-    res.json(database.users);  
-});
+app.use('/auth', authRoutes);
+app.get('/', authRoutes);
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {
