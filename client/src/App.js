@@ -125,52 +125,18 @@ class App extends Component {
 
 
   render() {
-    let route = (
-      <Switch>
-        <Redirect from="/" to="/login" exact />
-        <Redirect from="/login" to="/register" exact />
-        <Route path="/login" render={props => (
-            <SignIn {...props} loadUser={this.loadUser} routeChanger={this.routeChanger}/>
-          )}
-        />
-        <Route path="/register" render={props => (
-            <Register {...props} loadUser={this.loadUser} routeChanger={this.routeChanger}/>
-          )}
-        />
-        <Route path="/" render={props => (
-            <div>
-              <Rank {...props} name={this.state.user.name} rank={this.state.user.detection}/>
-              <InputForm {...props} onInputChange={this.onInputChange} onSubmitBtn={this.onSubmit}/>
-              <Image {...props} box={this.state.box} imgSrc={this.state.imgUrl}/>
-            </div>
-          )}
-        />
-      </Switch>
-    );
+    let route;
 
     if(this.state.route === 'signin'){
-      // route = <SignIn loadUser={this.loadUser} routeChanger={this.routeChanger}/>;
-      route = (
-        <Switch>
-          <Redirect from="/" to="/login" exact />
-          <Redirect from="/register" to="/login" exact />
-        </Switch>
-      );  
+      route = <SignIn loadUser={this.loadUser} routeChanger={this.routeChanger}/>;
     } else if(this.state.route === 'register'){
-      // route = <Register loadUser={this.loadUser} routeChanger={this.routeChanger}/>;
-      route = (
-        <Switch>
-          <Redirect from="/" to="/register" exact />
-          <Redirect from="/login" to="/register" exact />
-        </Switch>
-      ); 
+      route = <Register loadUser={this.loadUser} routeChanger={this.routeChanger}/>;
     } else {
-      route = (
-        <Switch>
-          <Redirect from="/register" to="/" exact />
-          <Redirect from="/login" to="/" exact />
-        </Switch>
-      );
+      route = <div>
+                <Rank name={this.state.user.name} rank={this.state.user.detection}/>
+                <InputForm onInputChange={this.onInputChange} onSubmitBtn={this.onSubmit}/>
+                <Image box={this.state.box} imgSrc={this.state.imgUrl}/>
+              </div>;
     }
 
     return (
