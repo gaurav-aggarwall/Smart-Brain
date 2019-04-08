@@ -27,23 +27,25 @@ const ParticlesOptions = {
   }
 };
 
+const initalState = {
+  input: '',
+  imgUrl: '',
+  box: [],
+  faceCount: 0,
+  route: 'signin',
+  isSignedIn: false,
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    password: '',
+    detection: 0,
+    joined: ''
+  }
+};
+
 class App extends Component {
-  state = {
-    input: '',
-    imgUrl: '',
-    box: [],
-    faceCount: 0,
-    route: 'signin',
-    isSignedIn: false,
-    user: {
-      id: '',
-      name: '',
-      email: '',
-      password: '',
-      detection: 0,
-      joined: ''
-    }
-  };
+  state = initalState;
 
 
   // Box Area Calculation
@@ -99,7 +101,7 @@ class App extends Component {
       .then(res => res.data)
       .then(count => {
         this.setState(Object.assign(this.state.user, { detection: count}));
-      })
+      }).catch(console.log);
     }).catch(console.log);
   }
 
@@ -109,7 +111,7 @@ class App extends Component {
     if(route === 'home'){
       this.setState({isSignedIn: true});
     } else {
-      this.setState({isSignedIn: false});
+      this.setState(initalState);
     }
     this.setState({route: route});
   }

@@ -11,6 +11,10 @@ router.post('/login', (req,res) => {
     const userEmail = req.body.email;
     const userPass = req.body.password;
 
+    if(!userEmail || !userPass){
+        return res.status(400).json('Please fill all the fields');
+    }
+
     db('login')
     .select('email', 'hash')
     .where('email', '=', userEmail)
@@ -32,6 +36,10 @@ router.post('/login', (req,res) => {
 // New User Register 
 router.post('/register', (req,res) => {
     const { name, email, password } = req.body;
+
+    if(!name || !email || !password){
+        return res.status(400).json('Please fill all the fields');
+    }
 
     const hashedValue = bcrypt.hashSync(password);
 
