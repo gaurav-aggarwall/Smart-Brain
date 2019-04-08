@@ -94,13 +94,11 @@ class App extends Component {
   clarifaiFetch = () => {
     app.models.predict("a403429f2ddf4b49b307e318f00e528b", this.state.input)
     .then(response => {
-      console.log('called');
       this.displayBox(this.calculateBox(response));
-      console.log(response);
       axios.post('http://localhost:5000/profile/image', {id: this.state.user.id})
       .then(res => res.data)
-      .then(rank => {
-        this.setState({user: {detection: rank}});
+      .then(count => {
+        this.setState(Object.assign(this.state.user, { detection: count}));
       })
     }).catch(console.log);
   }
@@ -119,7 +117,7 @@ class App extends Component {
 
   // Load User
   loadUser = user => {
-    this.setState({user: {...user}}, () => console.log(this.state));
+    this.setState({user: {...user}});
   }
 
 
