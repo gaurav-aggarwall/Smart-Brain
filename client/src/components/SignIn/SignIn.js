@@ -21,7 +21,7 @@ class SignIn extends Component{
     onSumitSignIn = () => { 
         const dataObj = JSON.parse(JSON.stringify({...this.state}));
 
-        axios.post('/auth/login', dataObj)
+        axios.post('/login', dataObj)
         .then(res => res.data)
         .then(res => {
             if(res === 'Invalid Credentials'){

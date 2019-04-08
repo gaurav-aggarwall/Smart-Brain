@@ -12,8 +12,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
+app.use('/', authRoutes);
 
 app.get('/', (req,res) => {
     res.json(database.users);  
