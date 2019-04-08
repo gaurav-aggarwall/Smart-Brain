@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Particles from 'react-particles-js';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Clarifai from 'clarifai';
 import axios from 'axios';
 
@@ -124,18 +125,52 @@ class App extends Component {
 
 
   render() {
-    let route;
+    let route = (
+      <Switch>
+        <Redirect from="/" to="/login" exact />
+        <Redirect from="/login" to="/register" exact />
+        <Route path="/login" render={props => (
+            <SignIn {...props} loadUser={this.loadUser} routeChanger={this.routeChanger}/>
+          )}
+        />
+        <Route path="/register" render={props => (
+            <Register {...props} loadUser={this.loadUser} routeChanger={this.routeChanger}/>
+          )}
+        />
+        <Route path="/" render={props => (
+            <div>
+              <Rank {...props} name={this.state.user.name} rank={this.state.user.detection}/>
+              <InputForm {...props} onInputChange={this.onInputChange} onSubmitBtn={this.onSubmit}/>
+              <Image {...props} box={this.state.box} imgSrc={this.state.imgUrl}/>
+            </div>
+          )}
+        />
+      </Switch>
+    );
 
     if(this.state.route === 'signin'){
-      route = <SignIn loadUser={this.loadUser} routeChanger={this.routeChanger}/>;
+      // route = <SignIn loadUser={this.loadUser} routeChanger={this.routeChanger}/>;
+      route = (
+        <Switch>
+          <Redirect from="/" to="/login" exact />
+          <Redirect from="/register" to="/login" exact />
+        </Switch>
+      );  
     } else if(this.state.route === 'register'){
-      route = <Register loadUser={this.loadUser} routeChanger={this.routeChanger}/>;
+      // route = <Register loadUser={this.loadUser} routeChanger={this.routeChanger}/>;
+      route = (
+        <Switch>
+          <Redirect from="/" to="/register" exact />
+          <Redirect from="/login" to="/register" exact />
+        </Switch>
+      ); 
     } else {
-      route = <div>
-                <Rank name={this.state.user.name} rank={this.state.user.detection}/>
-                <InputForm onInputChange={this.onInputChange} onSubmitBtn={this.onSubmit}/>
-                <Image box={this.state.box} imgSrc={this.state.imgUrl}/>
-              </div>;
+      route = (
+        <Switch>
+          <Redirect from="/register" to="/" exact />
+          <Redirect from="/login" to="/" exact />
+        </Switch>
+      );
     }
 
     return (
