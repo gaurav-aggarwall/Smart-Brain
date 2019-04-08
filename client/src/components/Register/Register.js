@@ -28,7 +28,7 @@ class Register extends Component{
     onSumitRegister = () => { 
         const dataObj = JSON.parse(JSON.stringify({...this.state}));
 
-        axios.post('http://localhost:5000/auth/register', dataObj)
+        axios.post('/auth/register', dataObj)
         .then(res => res.data)
         .then(user => {
             if(user.id){

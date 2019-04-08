@@ -97,7 +97,7 @@ class App extends Component {
     app.models.predict("a403429f2ddf4b49b307e318f00e528b", this.state.input)
     .then(response => {
       this.displayBox(this.calculateBox(response));
-      axios.post('http://localhost:5000/profile/image', {id: this.state.user.id})
+      axios.post('/profile/image', {id: this.state.user.id})
       .then(res => res.data)
       .then(count => {
         this.setState(Object.assign(this.state.user, { detection: count}));
