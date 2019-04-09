@@ -2,6 +2,15 @@
     background: linear-gradient(89deg, #FF5EDF 0%, #04C8DE 100%);
     border-radius: 20px;
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 20px;
+    left: 20px;
+}
+
+@media(max-width: 768px){
+    
+    .Tilt{
+        top: 8px;
+        left: 8px;
+    }
+  
 }

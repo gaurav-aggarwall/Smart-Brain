@@ -32,7 +32,7 @@ const initalState = {
   imgUrl: '',
   box: [],
   faceCount: 0,
-  route: 'signin',
+  route: 'home',
   isSignedIn: false,
   user: {
     id: '',
@@ -131,7 +131,7 @@ class App extends Component {
     } else if(this.state.route === 'register'){
       route = <Register loadUser={this.loadUser} routeChanger={this.routeChanger}/>;
     } else {
-      route = <div>
+      route = <div className='main-component'>
                 <Rank name={this.state.user.name} rank={this.state.user.detection}/>
                 <InputForm onInputChange={this.onInputChange} onSubmitBtn={this.onSubmit}/>
                 <Image box={this.state.box} imgSrc={this.state.imgUrl}/>
