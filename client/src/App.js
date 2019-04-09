@@ -32,7 +32,7 @@ const initalState = {
   imgUrl: '',
   box: [],
   faceCount: 0,
-  route: 'login',
+  route: 'signin',
   isSignedIn: false,
   user: {
     id: '',
